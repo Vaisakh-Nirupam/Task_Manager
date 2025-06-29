@@ -21,7 +21,7 @@ class TaskManager(db.Model):
 # Initial Path
 @app.route("/")
 def index():
-    return "Hello, World!"
+    return render_template("home.html")
 
 # Main guard
 if __name__ == "__main__":
