@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -21,7 +21,8 @@ class TaskManager(db.Model):
 # Initial Path
 @app.route("/")
 def index():
-    return render_template("home.html")
+    logged_in = session.get("logged",False)
+    return render_template("home.html", logged=logged_in)
 
 # Main guard
 if __name__ == "__main__":
