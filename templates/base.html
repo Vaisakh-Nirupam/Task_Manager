@@ -4,13 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Task Manager - {% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='base.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/base.css')}}"
+    />
   </head>
   <body>
     <div id="navbar">
-      <div id="logo"></div>
-      <div id="pages"></div>
+      <div id="logo">
+        <img src="" alt="logo" />
+        <h2>My Task Manager</h2>
+      </div>
+      <div id="pages">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/">About</a></li>
+          <li><a href="/">Login</a></li>
+          <li><a href="/">Signup</a></li>
+          <!-- <li><a href="/">Tasks</a></li> -->
+          <!-- <li><a href="/">Add Tasks</a></li> -->
+        </ul>
+      </div>
     </div>
-    {% block body %}{% endblock body %}
+    <div id="container">{% block body %} {% endblock body %}</div>
   </body>
 </html>
