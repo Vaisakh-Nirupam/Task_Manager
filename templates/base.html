@@ -8,21 +8,34 @@
       rel="stylesheet"
       href="{{url_for('static',filename='css/base.css')}}"
     />
+    <link
+      rel="shortcut icon"
+      href="{{url_for('static',filename='images/Task Manager Logo.png')}}"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <div id="navbar">
       <div id="logo">
-        <img src="" alt="logo" />
+        <img
+          src="{{url_for('static',filename='images/Task Manager Logo.png')}}"
+          alt="logo"
+        />
         <h2>My Task Manager</h2>
       </div>
       <div id="pages">
         <ul>
+          {% if logged %}
           <li><a href="/">Home</a></li>
           <li><a href="/">About</a></li>
           <li><a href="/">Login</a></li>
           <li><a href="/">Signup</a></li>
-          <!-- <li><a href="/">Tasks</a></li> -->
-          <!-- <li><a href="/">Add Tasks</a></li> -->
+          {% else %}
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Tasks</a></li>
+          <li><a href="/">Add Tasks</a></li>
+          <li><a href="/">Logout</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
