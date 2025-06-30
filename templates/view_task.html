@@ -7,9 +7,45 @@
 <!-- Page CSS -->
 {% block css %}
 <link rel="stylesheet" href="{{url_for('static',filename='css/after_login.css')}}"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 {% endblock css %}
 
 <!-- ViewTask Page Content -->
 {% block body %}
-<h1>View Task Page</h1>
+<h1 id="view_task_heading">View Tasks</h1>
+<hr id="view_task_heading_line">
+
+<div id="all_tasks" class="task-list">
+{% if tasks %}
+    {% for task in tasks %}
+    <div class="task-card {% if task.completed == 'Completed' %}completed{% endif %}">
+        <h1>{{ task.task }}</h1>
+        <p>{{ task.description }}</p>
+        <p class="date">Created: {{ task.created }}</p>
+        <p class="status">Status: {{ task.completed }}</p>
+        
+        <div class="task-actions">
+            <!-- Toggle completion -->
+            <a href="{{ url_for('toggle_task', sno=task.sno) }}" title="Toggle Complete" class="icon">
+                {% if task.completed == 'Completed' %}
+                    <i class="fa-solid fa-rotate-left"></i>
+                {% else %}
+                    <i class="fa-solid fa-check"></i>
+                {% endif %}
+            </a>
+            <!-- Delete -->
+            <a href="{{ url_for('delete_task', sno=task.sno) }}" title="Delete" class="icon delete">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+            <!-- Edit -->
+            <a href="{{ url_for('update_task', sno=task.sno) }}" title="Edit" class="icon edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No tasks available. Add one from the Add Task page!</p>
+{% endif %}
+</div>
 {% endblock body %}
