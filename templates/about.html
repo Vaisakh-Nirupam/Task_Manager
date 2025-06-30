@@ -22,15 +22,16 @@
         <div id="socials">
             <!-- Social Heading -->
             <h2>Socials</h2>
+            <div id="social_links">
+              <!-- Linkedin Page -->
+              <a class="button_a_tag" target="_blank" href="http://www.linkedin.com/in/vaisakh-nirupam">Linkedin</a>
 
-            <!-- Linkedin Page -->
-            <a class="button_a_tag" target="_blank" href="http://www.linkedin.com/in/vaisakh-nirupam">Linkedin</a>
-
-            <!-- GitHub Page -->
-            <a class="button_a_tag" target="_blank" href="https://github.com/Vaisakh-Nirupam">Github</a>
-
-            <!-- Send Message Page -->
-            <button type="submit" id="send_message" form="contact_me">Send</button>
+              <!-- GitHub Page -->
+              <a class="button_a_tag" target="_blank" href="https://github.com/Vaisakh-Nirupam">Github</a>
+  
+              <!-- Send Message Page -->
+              <button type="submit" id="send_message" form="contact_me">Send</button>
+            </div>
         </div>
         <hr />
         <form method="POST" action="/about" id="contact_me">
@@ -46,6 +47,9 @@
 
           <!-- User Message -->
           <input type="text" name="message" id="message" placeholder="Enter your message" required/>
+
+          <!-- Send button on Phone -->
+          <button type="submit" id="send_message_mobile" class="button_a_tag">Send</button>
 
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
