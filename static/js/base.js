@@ -37,6 +37,18 @@ if (flash_profile && addButton) {
     }, 3000);
 }
 
+// Submit button on Login page
+const loginButton = document.getElementById("login_btn");
+if (flash_profile && loginButton) {
+    loginButton.style.display = "none";
+    setTimeout(() => {
+        flash_profile.style.opacity = 0;
+        setTimeout(() => {
+            flash_profile.remove();
+            loginButton.style.display = "inline-block";
+        }, 500);
+    }, 3000);
+}
 
 // Back and Exit Functionality on Signup Page
 document.querySelectorAll(".return_button").forEach(button => {

@@ -87,7 +87,7 @@ def login():
                 session['logged'] = logged
                 session['user_id'] = user.uid
                 
-                flash("Logged in successfully!", "success")
+                # flash("Logged in successfully!", "success")
                 return redirect("/viewTask")
             else:
                 flash("Invalid password. Please try again.", "error")
