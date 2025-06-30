@@ -80,6 +80,12 @@ button {
   text-decoration: none;
 }
 
+#social_links {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
 #contact_me {
   width: 60%;
 }
@@ -92,4 +98,21 @@ button {
 
 p{
   margin-bottom: 10px;
+}
+
+#send_message_mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #send_message_mobile {
+    display: block;
+    background-color: #63a487;
+  }
+  #send_message_mobile:hover {
+    background-color: #4b946c;
+  }
+  #social_links #send_message {
+    display: none;
+  }
 }
