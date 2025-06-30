@@ -8,10 +8,11 @@ setTimeout(() => {
 }, 3000);
 
 
-// Fading the Flash Messages (& Hiding the Edit button on profile page) 
-const flash_profile = document.getElementById("flash-message-profile");
-const editButton = document.getElementById("edit_profile_btn");
+// Fading the Flash Messages (& Hiding the button) 
+const flash_profile = document.getElementById("flash-message-disappear");
 
+// Edit button on profile page
+const editButton = document.getElementById("edit_profile_btn"); 
 if (flash_profile && editButton) {
     editButton.style.display = "none";
     setTimeout(() => {
@@ -19,6 +20,19 @@ if (flash_profile && editButton) {
         setTimeout(() => {
             flash_profile.remove();
             editButton.style.display = "inline-block";
+        }, 500);
+    }, 3000);
+}
+
+// Submit button on Add Task page
+const addButton = document.getElementById("add_task_btn");
+if (flash_profile && addButton) {
+    addButton.style.display = "none";
+    setTimeout(() => {
+        flash_profile.style.opacity = 0;
+        setTimeout(() => {
+            flash_profile.remove();
+            addButton.style.display = "inline-block";
         }, 500);
     }, 3000);
 }
