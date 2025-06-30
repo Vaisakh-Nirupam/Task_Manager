@@ -12,17 +12,18 @@
 <!-- AddTask Page Content -->
 {% block body %}
 <div id="addtask">
-    <h1>Add Task Page</h1>
+    <h1>Add Task</h1>
     <hr>
     <div id="taskdata">
         <form action="" method="POST">
 
         <!-- User Task -->
         <label for="name">Task</label>
-        <input type="text" name="task" id="task" placeholder="Enter the task">
+        <input type="text" name="task" id="task" placeholder="Enter the task" required >
         
         <!-- User Task Description -->
-        <textarea name="desc" id="desc">Description</textarea>
+        <label for="name">Description</label>
+        <textarea name="desc" id="desc" placeholder="Enter the task description" required ></textarea>
 
         <!-- Submit Button -->
         <button type="submit" id="add_task_btn">Add</button>

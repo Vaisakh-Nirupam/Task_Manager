@@ -44,10 +44,10 @@
         <!-- Edit Profile Page -->
         {% elif page == "edit_profile" %}
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}">
+        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}" required >
     
         <label for="phone">Phone</label>
-        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}">
+        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}" required >
 
         <button type="submit" name="action" value="save_profile" id="edit_profile">Submit</button>
         <button type="submit" name="action" value="change_password" id="change_password">Change Password</button>

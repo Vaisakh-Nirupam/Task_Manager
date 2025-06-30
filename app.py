@@ -240,6 +240,8 @@ def add():
         task = request.form["task"]
         description = request.form["desc"]
 
+        
+
     return render_template("add_task.html", logged=True, active="add")
 
 # View User Profile

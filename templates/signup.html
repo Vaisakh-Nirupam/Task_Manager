@@ -20,8 +20,9 @@
     <div id="signup">
         <!-- Signup Form -->
         <form action="" method="POST">
-            {% if signup_stage == 1 %}
-            <!-- User Full Name -->
+        
+        <!-- User Full Name -->
+        {% if signup_stage == 1 %}
             <label for="fullname">Full Name</label>
             <input type="text" name="fullname" id="fullname" placeholder="Enter your Full Name" required />
             
@@ -46,9 +47,10 @@
                 {% endif %}
             {% endwith %}
                 
-            {% elif signup_stage == 2 %}
-            <!-- OTP Submission -->
-            <!-- <p>An OTP has been sent to your entered email</p> -->
+        <!-- OTP Submission -->
+        {% elif signup_stage == 2 %}
+        
+            <!-- Enter OTP Received -->
             <label for="pass">Enter the OTP Number</label>
             <input type="password" name="pass" id="pass" placeholder="Enter the otp sent" required />
             
@@ -70,9 +72,9 @@
                 {% endif %}
             {% endwith %}
              
-            {% else %}
-            <!-- User Password -->
-            
+        <!-- User Password -->
+        {% else %}
+
             <!-- Create User Password -->
             <label for="pass">Create Password</label>
             <input type="password" name="create_pass" id="create_pass" placeholder="Enter your password" required/>
@@ -99,9 +101,7 @@
                 {% endif %}
             {% endwith %}
                 
-            {% endif %}
-            
-           
+        {% endif %}  
         </form>
     </div>
 </div>
