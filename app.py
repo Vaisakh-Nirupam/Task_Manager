@@ -63,7 +63,6 @@ mail = Mail(app)
 # Initial Path
 @app.route("/")
 def index():
-    # logged_in = session.get("logged",False)
     return render_template("home.html", logged=False, active="home")
 
 
@@ -87,8 +86,6 @@ def login():
                 logged = True
                 session['logged'] = logged
                 session['user_id'] = user.uid
-                # session['user_name'] = user.fullname
-                # session['email'] = user.email
                 
                 flash("Logged in successfully!", "success")
                 return redirect("/viewTask")
@@ -227,13 +224,22 @@ def about():
 def view():
     if not session.get("logged"):
         return redirect("/")
-    return render_template("view_task.html", logged=True, active="view")
+    
+    userid = session.get(["user_id"])
+    tasks = TaskManager.query.get(session["user_id"])
+
+    return render_template("view_task.html", logged=True, user=userid, tasks=tasks, active="view")
 
 # Add New Tasks
 @app.route("/addTask", methods=["GET","POST"])
 def add():
     if not session.get("logged"):
         return redirect("/")
+    
+    if request.method == "POST":
+        task = request.form["task"]
+        description = request.form["desc"]
+
     return render_template("add_task.html", logged=True, active="add")
 
 # View User Profile
@@ -246,7 +252,7 @@ def profile():
 
     # Default Page
     page = "view_profile"
-
+    
     if request.method == "POST":
         # Clicked button value:
         action = request.form.get("action")
@@ -274,12 +280,15 @@ def profile():
             new_pass = request.form.get("new_pass")
             confirm_pass = request.form.get("confirm_pass")
 
+            # Checking password
             if not check_password_hash(user.pwd, old_pass):
                 flash("Old password is incorrect!", "error")
                 page = "change_password"
+            # Confirming password
             elif new_pass != confirm_pass:
                 flash("New passwords do not match!", "error")
                 page = "change_password"
+            # Updating password
             else:
                 user.pwd = generate_password_hash(new_pass)
                 db.session.commit()

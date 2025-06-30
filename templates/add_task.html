@@ -4,7 +4,29 @@
 <!-- Page Title -->
 {% block title %}Add Task{% endblock title %}
 
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/after_login.css')}}"/>
+{% endblock css %}
+
 <!-- AddTask Page Content -->
 {% block body %}
-<h1>Add Task Page</h1>
+<div id="addtask">
+    <h1>Add Task Page</h1>
+    <hr>
+    <div id="taskdata">
+        <form action="" method="POST">
+
+        <!-- User Task -->
+        <label for="name">Task</label>
+        <input type="text" name="task" id="task" placeholder="Enter the task">
+        
+        <!-- User Task Description -->
+        <textarea name="desc" id="desc">Description</textarea>
+
+        <!-- Submit Button -->
+        <button type="submit" id="add_task_btn">Add</button>
+        </form>
+    </div>
+</div>
 {% endblock body %}

@@ -4,6 +4,11 @@
 <!-- Page Title -->
 {% block title %}View Task{% endblock title %}
 
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/after_login.css')}}"/>
+{% endblock css %}
+
 <!-- ViewTask Page Content -->
 {% block body %}
 <h1>View Task Page</h1>
