@@ -6,6 +6,27 @@
     flex-direction: column;
 }
 
+#all_tasks {
+    width: auto !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    display: block;
+    flex-direction: unset !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+#all_tasks {
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#all_tasks::-webkit-scrollbar {
+    display: none;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -14,4 +35,73 @@ form {
 button{
     margin-top: 10px;
     /* margin-bottom: 0; */
+}
+
+#desc {
+    width: 100%;
+    height: 130px;
+    resize: none;
+}
+
+#view_task_heading {
+    margin-top: 15px;
+}
+
+#view_task_heading_line{
+    width: 25%;
+}
+
+.task-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+.task-card {
+border: 1px solid #ccc;
+border-radius: 10px;
+padding: 1rem;
+width: 300px;
+background-color: #f9f9f9;
+box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.task-card.completed {
+background-color: #d4edda;
+border-color: #c3e6cb;
+}
+
+.task-card .status {
+font-weight: bold;
+}
+
+.task-card .date {
+font-size: 0.8rem;
+color: #666;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.task-actions .icon {
+font-size: 1.2rem;
+color: #333;
+text-decoration: none;
+transition: color 0.3s ease;
+}
+
+.task-actions .icon:hover {
+color: #636fa4;
+}
+
+.task-actions .icon.delete:hover {
+color: #dc3545;
+}
+
+.task-actions .icon.edit:hover {
+color: #198754;
 }
