@@ -225,10 +225,57 @@ def view():
     if not session.get("logged"):
         return redirect("/")
     
-    userid = session.get(["user_id"])
-    tasks = TaskManager.query.get(session["user_id"])
+    userid = session['user_id']
+    tasks = TaskManager.query.filter_by(uid=session["user_id"]).all()
 
     return render_template("view_task.html", logged=True, user=userid, tasks=tasks, active="view")
+
+# Complete/Incomplete Task
+@app.route("/toggleTask/<int:sno>")
+def toggle_task(sno):
+    if not session.get("logged"):
+        return redirect("/")
+    
+    task = TaskManager.query.filter_by(sno=sno, uid=session["user_id"]).first()
+    if task:
+        task.completed = "Pending" if task.completed == "Completed" else "Completed"
+        db.session.commit()
+        # flash(f"Task marked as {task.completed}!", "success")
+    return redirect("/viewTask")
+
+
+# Delete a Task
+@app.route("/deleteTask/<int:sno>", methods=["GET","POST"])
+def delete_task(sno):
+    if not session.get("logged"):
+        return redirect("/")
+
+    task = TaskManager.query.filter_by(sno=sno, uid=session["user_id"]).first()
+    if task:
+        # flash("Task deleted successfully!", "success")
+        db.session.delete(task)
+        db.session.commit()
+    return redirect("/viewTask")
+
+
+# Update a Task
+@app.route("/updateTask/<int:sno>", methods=["GET", "POST"])
+def update_task(sno):
+    if not session.get("logged"):
+        return redirect("/")
+
+    task = TaskManager.query.filter_by(sno=sno, uid=session["user_id"]).first()
+
+    if request.method == "POST":
+        new_task = request.form.get("task")
+        new_desc = request.form.get("desc")
+        task.task = new_task
+        task.description = new_desc
+        db.session.commit()
+        # flash("Task updated successfully!", "success")
+        return redirect("/viewTask")
+
+    return render_template("update_task.html", logged=True, active="update", task=task)
 
 # Add New Tasks
 @app.route("/addTask", methods=["GET","POST"])
@@ -236,11 +283,19 @@ def add():
     if not session.get("logged"):
         return redirect("/")
     
+    user_id = session['user_id']
+
     if request.method == "POST":
         task = request.form["task"]
         description = request.form["desc"]
 
-        
+        new_task = TaskManager(task=task, description=description, uid=user_id)
+
+        db.session.add(new_task)
+        db.session.commit()
+
+        flash("Task added successfully!","success")
+        # return redirect("/viewTask")
 
     return render_template("add_task.html", logged=True, active="add")
 
