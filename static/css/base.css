@@ -20,7 +20,6 @@ body {
   align-items: center;
   padding: 10px 60px;
   margin-top: 15px;
-  height: 60px;
 }
 
 /* Navbar Logo */
@@ -58,10 +57,108 @@ body {
   color: #d5d5d5;
 }
 
-#container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 75px);
+/* Navbar Hover Hold */
+#pages ul li a.active {
+  color: #d5d5d5;
+}
+
+#container > div {
+  margin-top: 70px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+#container > div:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+form {
+  width: 80%;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: #636fa4; /* highlight color */
+  box-shadow: 0 0 5px rgba(99, 111, 164, 0.4);
+}
+
+hr,
+button {
+    margin-bottom: 15px;
+}
+
+button {
+  background-color: #636fa4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #4b5694;
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.flash {
+  padding: 0.75rem 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+}
+
+.flash_success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border-color: #badbcc;
+}
+
+.flash_error {
+  background-color: #f8d7da;
+  color: #842029;
+  border-color: #f5c2c7;
 }

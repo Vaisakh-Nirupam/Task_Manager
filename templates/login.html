@@ -1,0 +1,43 @@
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}Login{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static',filename='css/before_login.css')}}"
+/>
+{% endblock css %}
+
+<!-- Login Page Content -->
+{% block body %}
+<div id="login">
+    <!-- Login Heading -->
+    <h1>Login</h1>
+    <hr />
+    
+    <!-- Login -->
+    <div id="login_form">
+        <!-- Login Form -->
+        <form action="" method="post">
+          
+        <!-- User Email -->
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Enter your email address" required/>
+
+        <!-- User Password -->
+        <label for="pass">Password</label>
+        <input type="password" name="pass" id="pass" placeholder="Enter your password" required/>
+
+        <!-- Signup Redirect -->
+        <p>Don't have an Account? <a href="/signup">Signup</a></p>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+        </form>
+  </div>
+</div>
+{% endblock body %}

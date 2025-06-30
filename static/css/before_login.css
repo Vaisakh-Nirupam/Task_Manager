@@ -1,0 +1,95 @@
+#container > div {
+  width: 600px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+#container > div > div {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.button_a_tag {
+  display: inline-block;
+  background-color: #636fa4;
+  color: #fff;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button_a_tag:hover {
+  background-color: #4b5694;
+  transform: scale(1.02);
+}
+
+#send_message {
+  background-color: #63a487;
+}
+
+#send_message:hover {
+  background-color: #4b946c;
+}
+
+.return_button {
+  background-color: #a46363;
+}
+
+.return_button:hover {
+  background-color: #944b4b;
+}
+
+hr,
+button {
+    margin-bottom: 15px;
+}
+
+#home p {
+    font-size: 20px;
+    text-align: justify;
+    padding: 5px 25px;
+}
+
+#about_col {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#about_col hr{
+    height: 100%;
+}
+
+#socials {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#socials a {
+  text-decoration: none;
+}
+
+#contact_me {
+  width: 60%;
+}
+
+#contact {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+p{
+  margin-bottom: 10px;
+}

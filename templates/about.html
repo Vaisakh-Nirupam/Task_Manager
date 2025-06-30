@@ -1,0 +1,64 @@
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}About{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static',filename='css/before_login.css')}}"
+/>
+{% endblock css %}
+
+<!-- About Page Content -->
+{% block body %}
+<div id="about">
+    <!-- About Heading -->
+    <h1>About</h1>
+    <hr />
+    <div id="about_col">
+        <div id="socials">
+            <!-- Social Heading -->
+            <h2>Socials</h2>
+
+            <!-- Linkedin Page -->
+            <a class="button_a_tag" target="_blank" href="http://www.linkedin.com/in/vaisakh-nirupam">Linkedin</a>
+
+            <!-- GitHub Page -->
+            <a class="button_a_tag" target="_blank" href="https://github.com/Vaisakh-Nirupam">Github</a>
+
+            <!-- Send Message Page -->
+            <button type="submit" id="send_message" form="contact_me">Send</button>
+        </div>
+        <hr />
+        <form method="POST" action="/about" id="contact_me">
+        <div id="contact">
+          <!-- Contact Heading -->
+          <h2>Send a Message</h2>
+
+          <!-- User Name -->
+          <input type="text" name="name" id="name" placeholder="Enter your Name" required/>
+
+          <!-- User Email -->
+          <input type="email" name="email" id="email" placeholder="Enter your email address" required/>
+
+          <!-- User Message -->
+          <input type="text" name="message" id="message" placeholder="Enter your message" required/>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div id="flash-message" class="flash flash_{{category}}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+        </div>
+        </form>
+  </div>
+</div>
+{% endblock body %}

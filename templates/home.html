@@ -1,4 +1,32 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock title %} {% block
-body %}
-<h1>Hello, World!</h1>
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}Home{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/before_login.css')}}"/>
+{% endblock css %}
+
+<!-- Home Page Content -->
+{% block body %}
+<div id="home">
+    <!-- App Welcome -->
+    <h1>Welcome</h1>
+    <hr />
+    
+    <!-- App Description -->
+    <p>
+      Welcome to your personal Task Manager — a simple tool to help you add,
+      update, and track your daily tasks with ease. Create new tasks, mark them as
+      complete, or remove them once finished, all through a clean and responsive
+      interface designed to keep you organized. With secure login and signup, your
+      tasks stay private and always accessible. Start now to take control of your
+      to-do list and make every day more productive.
+    </p>
+
+    <!-- Signup Redirect -->
+    <a class="button_a_tag" href="/signup">Get Started</a>
+</div>
 {% endblock body %}

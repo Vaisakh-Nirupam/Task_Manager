@@ -3,42 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- App Title -->
     <title>My Task Manager - {% block title %}{% endblock title %}</title>
-    <link
-      rel="stylesheet"
-      href="{{url_for('static',filename='css/base.css')}}"
-    />
-    <link
-      rel="shortcut icon"
-      href="{{url_for('static',filename='images/Task Manager Logo.png')}}"
-      type="image/x-icon"
-    />
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}"/>
+    
+    <!-- Additional CSS -->
+    {% block css %}{% endblock css %}
+    
+    <!-- App Icon -->
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/Task Manager Logo.png')}}" type="image/x-icon"/>
   </head>
   <body>
+    <!-- Navigation -->
     <div id="navbar">
+
+      <!-- App Logo -->
       <div id="logo">
-        <img
-          src="{{url_for('static',filename='images/Task Manager Logo.png')}}"
-          alt="logo"
-        />
+        <img src="{{url_for('static',filename='images/Task Manager Logo.png')}}" alt="logo"/>
         <h2>My Task Manager</h2>
       </div>
+
+      <!-- App Pages -->
       <div id="pages">
         <ul>
+          <!-- After Login -->
           {% if logged %}
-          <li><a href="/">Home</a></li>
-          <li><a href="/">About</a></li>
-          <li><a href="/">Login</a></li>
-          <li><a href="/">Signup</a></li>
+          <li><a href="/viewTask" class="{% if active=='view' %}active{% endif %}">Tasks</a></li>
+
+          <li><a href="/addTask" class="{% if active=='add' %}active{% endif %}">Add Tasks</a></li>
+
+          <li><a href="/profile" class="{% if active=='profile' %}active{% endif %}">Profile</a></li>
+
+          <li><a href="/logout" class="{% if active=='logout' %}active{% endif %}">Logout</a></li>
+
+          <!-- Before Login -->
           {% else %}
-          <li><a href="/">Home</a></li>
-          <li><a href="/">Tasks</a></li>
-          <li><a href="/">Add Tasks</a></li>
-          <li><a href="/">Logout</a></li>
+          <li><a href="/" class="{% if active=='home' %}active{% endif %}">Home</a></li>
+
+          <li><a href="/about" class="{% if active=='about' %}active{% endif %}">About</a></li>
+
+          <li><a href="/login" class="{% if active=='login' %}active{% endif %}">Login</a></li>
+
+          <li><a href="/signup" class="{% if active=='signup' %}active{% endif %}">Signup</a></li>
           {% endif %}
+
         </ul>
       </div>
     </div>
-    <div id="container">{% block body %} {% endblock body %}</div>
+
+    <!-- App Content -->
+    <div id="container" align="center">
+      {% block body %} {% endblock body %}
+    </div>
+
+    <script src="{{url_for('static',filename='js/base.js')}}"></script>
   </body>
 </html>

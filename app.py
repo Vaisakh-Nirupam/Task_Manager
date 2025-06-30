@@ -1,28 +1,298 @@
-from flask import Flask, render_template, redirect, request, session
+# Libraries Required
+from flask import Flask, render_template, redirect, request, session, flash
+# Database
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+# Mailing
+from flask_mail import Mail, Message
+from dotenv import load_dotenv
+import os
+import random
+# Hashing
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # App initialization
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:pass@localhost:3307/test_data"
 db = SQLAlchemy(app)
 
-# Table creation
+# User Table creation
+class Users(db.Model):
+    __tablename__ = 'users'
+    uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    fullname = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    phone = db.Column(db.String(20), nullable=True, unique=True)
+    pwd = db.Column(db.String(200), nullable=False)
+    
+    tasks = db.relationship("TaskManager", backref="user", lazy=True)
+
+    def __repr__(self):
+        return f"{self.uid}. {self.email}"
+
+# Task Table creation
 class TaskManager(db.Model):
+    __tablename__ = 'task_manager'
     sno = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    task = db.Column(db.String(200), nullable=True)
+    task = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(500), nullable=True)
     created = db.Column(db.Date, default=lambda:datetime.utcnow().date())
     completed = db.Column(db.String(10), default="Pending")
+    
+    uid = db.Column(db.Integer, db.ForeignKey('users.uid'), nullable=False)
 
     def __repr__(self):
         return f"{self.sno}. {self.task}"
 
+# Loading .env
+load_dotenv()
+
+# Mail Config
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_RECEIVER'] = os.getenv("MAIL_RECEIVER")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
+app.config['MAIL_USE_SSL'] = False
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
+# Mail Setup
+mail = Mail(app)
+
 # Initial Path
 @app.route("/")
 def index():
-    logged_in = session.get("logged",False)
-    return render_template("home.html", logged=logged_in)
+    # logged_in = session.get("logged",False)
+    return render_template("home.html", logged=False, active="home")
+
+
+# Before Login Pages:
+
+# Account Login 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # logged_in = session.get("logged", False)
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("pass")
+        
+        # Check if User Exists
+        user = Users.query.filter_by(email=email).first()
+        
+        if user:
+            if check_password_hash(user.pwd, password):
+                # Login successful
+                logged = True
+                session['logged'] = logged
+                session['user_id'] = user.uid
+                # session['user_name'] = user.fullname
+                # session['email'] = user.email
+                
+                flash("Logged in successfully!", "success")
+                return redirect("/viewTask")
+            else:
+                flash("Invalid password. Please try again.", "error")
+        else:
+            flash("No account found with that email.", "error")
+    
+    return render_template("login.html", logged=False, active="login")
+
+# Account Signup
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    # logged_in = session.get("logged", False)
+
+    signup_stage = 1
+
+    if request.method == "POST":
+        # Stage 1: Send OTP
+        name = request.form.get("fullname")
+        email = request.form.get("email")
+        otp = str(random.randint(100000, 999999))
+
+        # Back & Exit
+        stage_action = request.form.get("stage_action")
+        if stage_action:
+            if stage_action == "back":
+                signup_stage = 1
+            elif stage_action == "exit":
+                flash("Signup cancelled.", "error")
+                return redirect("/signup")           
+
+        if name and email:
+            existing_user = Users.query.filter_by(email=email).first()
+            if existing_user:
+                flash("Account with this email already exists.", "error")
+                return redirect("/signup")
+            
+            # Email Content
+            msg = Message(
+                subject="Verification Code for My Task Manager",
+                sender=app.config['MAIL_USERNAME'],
+                recipients=[email],
+                body=f"""
+Dear {name},
+
+Your One-Time Password (OTP) for completing your registration is:
+
+{otp}
+
+This code is valid for the next 5 minutes. Please do not share it with anyone.
+
+If you did not request this code, please ignore this email.
+
+Thanks,
+My Task Manager Team
+"""
+            )
+
+            # Email Sent
+            mail.send(msg)
+            flash("An OTP has been sent to your email address!", "success")
+            
+            # Session Storing Values
+            session['signup_name'] = name
+            session['signup_otp'] = otp
+            session['signup_email'] = email
+            signup_stage = 2
+
+        elif request.form.get("pass"):
+            # stage 2: OTP Validation
+            entered_otp = request.form.get("pass")
+
+            if entered_otp == session.get("signup_otp"):
+                flash("OTP verified successfully.", "success")
+                signup_stage = 3
+            else:
+                flash("Invalid OTP. Please try again.", "error")
+                signup_stage = 2
+
+        elif request.form.get("create_pass") and request.form.get("confirm_pass"):
+            # stage 3: Creating User Account
+            pass1 = request.form.get("create_pass")
+            pass2 = request.form.get("confirm_pass")
+
+            if pass1 != pass2:
+                flash("Passwords do not match.", "error")
+                signup_stage = 3
+            else:
+                # Password Hashing
+                passw = generate_password_hash(pass1)
+                new_user = Users(
+                    fullname=session.get('signup_name'),
+                    email=session.get('signup_email'),
+                    pwd=passw
+                )
+                db.session.add(new_user)
+                db.session.commit()
+
+                session.clear()
+
+                flash("Account created successfully!", "success")
+                return redirect("/login")
+
+    return render_template("signup.html", logged=False, active="signup", signup_stage=signup_stage)
+
+# About Page
+@app.route("/about", methods=["GET","POST"])
+def about():
+    # logged_in = session.get("logged", False)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        msg = Message(
+            subject="My Task Manager Contact Message",
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[app.config['MAIL_RECEIVER']],
+            body=f"Name:{name}\n\nEmail:{email}\n\nMessage:{message}"
+        )
+
+        mail.send(msg)
+
+        flash("Your Message has been Sent Successfully!", "success")
+
+    return render_template("about.html", logged=False, active="about")
+
+
+
+# After Login Pages:
+
+# View All Tasks
+@app.route("/viewTask", methods=["GET","POST"])
+def view():
+    if not session.get("logged"):
+        return redirect("/")
+    return render_template("view_task.html", logged=True, active="view")
+
+# Add New Tasks
+@app.route("/addTask", methods=["GET","POST"])
+def add():
+    if not session.get("logged"):
+        return redirect("/")
+    return render_template("add_task.html", logged=True, active="add")
+
+# View User Profile
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if not session.get("logged"):
+        return redirect("/")
+    
+    user = Users.query.get(session['user_id'])
+
+    # Default Page
+    page = "view_profile"
+
+    if request.method == "POST":
+        # Clicked button value:
+        action = request.form.get("action")
+
+        if action == "edit":
+            page = "edit_profile"
+
+        elif action == "save_profile":
+            new_name = request.form.get("name")
+            new_phone = request.form.get("phone")
+
+            # Update profile
+            user.fullname = new_name
+            user.phone = new_phone
+            db.session.commit()
+
+            flash("Profile updated successfully!", "success")
+            page = "view_profile"
+
+        elif action == "change_password":
+            page = "change_password"
+
+        elif action == "save_password":
+            old_pass = request.form.get("old_pass")
+            new_pass = request.form.get("new_pass")
+            confirm_pass = request.form.get("confirm_pass")
+
+            if not check_password_hash(user.pwd, old_pass):
+                flash("Old password is incorrect!", "error")
+                page = "change_password"
+            elif new_pass != confirm_pass:
+                flash("New passwords do not match!", "error")
+                page = "change_password"
+            else:
+                user.pwd = generate_password_hash(new_pass)
+                db.session.commit()
+                flash("Password changed successfully!", "success")
+                page = "view_profile"
+
+    return render_template("profile.html", logged=True, profile=user, active="profile", page=page)
+
+# Account Logout 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 # Main guard
 if __name__ == "__main__":

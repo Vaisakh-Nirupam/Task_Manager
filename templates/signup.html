@@ -1,0 +1,108 @@
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}Signup{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/before_login.css')}}" />
+{% endblock css %}
+
+<!-- Signup Page Content -->
+{% block body %}
+<div id="signup_form">
+    <!-- Signup Heading -->
+    <h1>Signup</h1>
+    <hr />
+
+    <!-- Signup -->
+    <div id="signup">
+        <!-- Signup Form -->
+        <form action="" method="POST">
+            {% if signup_stage == 1 %}
+            <!-- User Full Name -->
+            <label for="fullname">Full Name</label>
+            <input type="text" name="fullname" id="fullname" placeholder="Enter your Full Name" required />
+            
+            <!-- User Email -->
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email address" required />
+
+            <!-- Login Redirect -->
+            <p>Already a User? <a href="/login">Login</a></p>
+            
+            <!-- OTP Send Button -->
+            <button type="submit">Send</button>
+
+            <!-- Alert Message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+                
+            {% elif signup_stage == 2 %}
+            <!-- OTP Submission -->
+            <!-- <p>An OTP has been sent to your entered email</p> -->
+            <label for="pass">Enter the OTP Number</label>
+            <input type="password" name="pass" id="pass" placeholder="Enter the otp sent" required />
+            
+            <!-- OTP Validate Button -->
+            <button type="submit">Submit</button>
+
+            <!-- Back Button -->
+            <input type="hidden" name="stage_action" id="stage_action" value="">
+            <button type="button" class="return_button">Back</button>
+
+            <!-- Alert Message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+             
+            {% else %}
+            <!-- User Password -->
+            
+            <!-- Create User Password -->
+            <label for="pass">Create Password</label>
+            <input type="password" name="create_pass" id="create_pass" placeholder="Enter your password" required/>
+            
+            <!-- Confirm User Password -->
+            <label for="pass">Confirm Password</label>
+            <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your password" required/>
+            
+            <!-- Account Create Button -->
+            <button type="submit">Submit</button>
+
+            <!-- Exit Button -->
+            <input type="hidden" name="stage_action" id="stage_action" value="">
+            <button type="button" class="return_button">Exit</button>
+
+            <!-- Alert Message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+                
+            {% endif %}
+            
+           
+        </form>
+    </div>
+</div>
+{% endblock body %}

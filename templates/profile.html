@@ -1,0 +1,95 @@
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}Profile{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/after_login.css')}}"/>
+{% endblock css %}
+
+<!-- Profile Page Content -->
+{% block body %}
+<div id="profile">
+    <h1>Profile</h1>
+    <hr />
+    <div id="profile_form">
+        <form action="" method="POST">
+
+        <!-- View Profile Page -->
+        {% if page == "view_profile" %}
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}" readonly>
+    
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="Enter your email" value="{{ profile.email }}" readonly>
+    
+        <label for="phone">Phone</label>
+        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}" readonly>
+
+        <button type="submit" name="action" value="edit" id="edit_profile">Edit</button>
+
+        <!-- Alert Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+            
+        <!-- Edit Profile Page -->
+        {% elif page == "edit_profile" %}
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}">
+    
+        <label for="phone">Phone</label>
+        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}">
+
+        <button type="submit" name="action" value="save_profile" id="edit_profile">Submit</button>
+        <button type="submit" name="action" value="change_password" id="change_password">Change Password</button>
+
+        <!-- Alert Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Change Password Page -->
+        {% else %}
+        <label for="old_pass">Old Password</label>
+        <input type="password" name="old_pass" id="old_pass" placeholder="Enter your old password" required>
+
+        <label for="new_pass">New Password</label>
+        <input type="password" name="new_pass" id="new_pass" placeholder="Enter your new password" required>
+
+        <label for="confirm_pass">Confirm Password</label>
+        <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your new password" required>
+
+        <button type="submit" name="action" value="save_password" id="edit_profile">Submit</button>
+
+        <!-- Alert Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flash-message" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% endif %}
+
+        </form>
+    </div>
+
+</div>
+{% endblock body %}
