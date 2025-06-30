@@ -1,0 +1,17 @@
+#container > div {
+    width: 600px;
+    height: 500px;
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    margin-top: 10px;
+    /* margin-bottom: 0; */
+}
