@@ -1,0 +1,121 @@
+/* Small screens (tablets, mobiles) */
+@media (max-width: 768px) {
+    #navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 20px;
+    }
+  
+    #logo {
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+  
+    #pages ul {
+        flex-direction: row; /* stay horizontal */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    #pages ul li a {
+        font-size: 16px;
+        padding: 5px 8px;
+    }
+  
+    #container > div {
+      width: 90% !important;
+      height: auto !important;
+      margin-top: 30px;
+      padding: 15px;
+    }
+  
+    #home p {
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+  
+    #about_col {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    #about_col hr {
+      width: 80%;
+      height: auto;
+    }
+  
+    #contact_me {
+      width: 90%;
+    }
+
+    #social_links {
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    #social_links a,
+    #social_links button {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 10px 16px;
+        margin: 0;
+    }
+  }
+  
+  /* Extra small screens (phones) */
+  @media (max-width: 480px) {
+    #logo h2 {
+      font-size: 20px;
+    }
+  
+    #pages ul li a {
+      font-size: 16px;
+    }
+  
+    button,
+    .button_a_tag {
+      font-size: 14px;
+      padding: 10px 18px;
+    }
+  
+    label {
+      font-size: 16px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    #home p {
+      font-size: 14px;
+      padding: 5px 5px;
+    }
+  
+    #view_task_heading {
+      font-size: 22px;
+    }
+  }
+  
+  /* Landscape tablets and medium devices */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    #navbar {
+      padding: 10px 30px;
+    }
+  
+    #container > div {
+      width: 80% !important;
+    }
+  
+    #contact_me {
+      width: 80%;
+    }
+  }
