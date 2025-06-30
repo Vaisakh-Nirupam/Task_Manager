@@ -1,0 +1,47 @@
+<!-- Inheriting Content -->
+{% extends 'base.html' %}
+
+<!-- Page Title -->
+{% block title %}Update Task{% endblock title %}
+
+<!-- Page CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/after_login.css')}}"/>
+{% endblock css %}
+
+<!-- AddTask Page Content -->
+{% block body %}
+<div id="addtask">
+    <h1>Update Task</h1>
+    <hr>
+    <div id="taskdata">
+        <form action="" method="POST">
+
+        <!-- User Task -->
+        <label for="name">Task</label>
+        <input type="text" name="task" id="task" placeholder="Enter the task" value="{{task.task}}" required >
+        
+        <!-- User Task Description -->
+        <label for="name">Description</label>
+        <textarea name="desc" id="desc" placeholder="Enter the task description" required >{{task.description}}</textarea>
+
+            <p></p>
+
+        <!-- Submit Button -->
+        <button type="submit" id="add_task_btn">Add</button>
+
+        <!-- Alert Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flash-message-disappear" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        </form>
+    </div>
+</div>
+{% endblock body %}
