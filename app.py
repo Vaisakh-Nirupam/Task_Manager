@@ -96,6 +96,92 @@ def login():
     
     return render_template("login.html", logged=False, active="login")
 
+# Forgot Password
+@app.route("/forgotPassword", methods=["GET","POST"])
+def forgot():
+    forgot_stage = 1
+
+    # Stage 1: Send OTP
+    if request.method == "POST":
+        email = request.form.get("email")
+        otp = str(random.randint(100000, 999999))
+
+        # Back & Exit
+        stage_action = request.form.get("stage_action")
+        if stage_action == "back":
+            forgot_stage = 1
+        elif stage_action == "exit":
+            flash("Password reset cancelled.", "error")
+            return redirect("/login")
+
+        if email:
+            user = Users.query.filter_by(email=email).first()
+            if not user:
+                flash("Account with this email doesn't exists.", "error")
+                return redirect("/signup")
+            
+            # Email Content
+            msg = Message(
+                subject="OTP for My Task Manager Password Reset",
+                sender=app.config['MAIL_USERNAME'],
+                recipients=[email],
+                body=f"""
+Dear {user.fullname},
+
+Your One-Time Password (OTP) to reset your password is:
+
+{otp}
+
+This code is valid for the next 5 minutes. Please do not share it with anyone.
+
+If you did not request this code, please ignore this email.
+
+Thanks,
+My Task Manager Team
+"""
+            )
+
+            # Email Sent
+            mail.send(msg)
+            flash("An OTP has been sent to your email address!", "success")
+            
+            # Session Storing Values
+            session['forgot_otp'] = otp
+            session['forgot_email'] = email
+            forgot_stage = 2          
+        
+        # stage 2: OTP Validation
+        elif request.form.get("pass"):
+            entered_otp = request.form.get("pass")
+
+            if entered_otp == session.get("forgot_otp"):
+                flash("OTP verified successfully.", "success")
+                forgot_stage = 3
+            else:
+                flash("Invalid OTP. Please try again.", "error")
+                forgot_stage = 2
+
+        # stage 3: Resetting User Password
+        elif request.form.get("create_pass") and request.form.get("confirm_pass"):
+            pass1 = request.form.get("create_pass")
+            pass2 = request.form.get("confirm_pass")
+
+            if pass1 != pass2:
+                flash("Passwords do not match.", "error")
+                forgot_stage = 3
+            else:
+                # Password Hashing
+                passw = generate_password_hash(pass1)
+                user = Users.query.filter_by(email=session["forgot_email"]).first()
+                user.pwd = passw
+                db.session.commit()
+                session.clear()
+
+                flash("Password changed successfully!", "success")
+                return redirect("/login")
+
+    return render_template("forgot_password.html", logged=False, active="login", forgot_stage=forgot_stage)
+
 # Account Signup
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -111,12 +197,11 @@ def signup():
 
         # Back & Exit
         stage_action = request.form.get("stage_action")
-        if stage_action:
-            if stage_action == "back":
-                signup_stage = 1
-            elif stage_action == "exit":
-                flash("Signup cancelled.", "error")
-                return redirect("/signup")           
+        if stage_action == "back":
+            signup_stage = 1
+        elif stage_action == "exit":
+            flash("Password reset cancelled.", "error")
+            return redirect("/signup")           
 
         if name and email:
             existing_user = Users.query.filter_by(email=email).first()
