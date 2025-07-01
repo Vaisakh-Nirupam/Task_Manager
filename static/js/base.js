@@ -1,64 +1,44 @@
-// Fading the Flash Messages
+// Fade out ALL flash messages after 3s
 setTimeout(() => {
-    const flash = document.getElementById("flash-message");
-    if (flash) {
+    const flashes = document.querySelectorAll(".flash");
+    flashes.forEach(flash => {
         flash.style.opacity = 0;
         setTimeout(() => flash.remove(), 500);
-    }
+    });
 }, 3000);
 
+// Fade Flash & Hide Button Function
+function handleFlashAndButton(buttonId) {
+    const flash = document.querySelector(".flash");
+    const button = document.getElementById(buttonId);
 
-// Fading the Flash Messages (& Hiding the button) 
-const flash_profile = document.getElementById("flash-message-disappear");
-
-// Edit button on profile page
-const editButton = document.getElementById("edit_profile_btn"); 
-if (flash_profile && editButton) {
-    editButton.style.display = "none";
-    setTimeout(() => {
-        flash_profile.style.opacity = 0;
+    if (flash && button) {
+        button.style.display = "none";
         setTimeout(() => {
-            flash_profile.remove();
-            editButton.style.display = "inline-block";
-        }, 500);
-    }, 3000);
+            flash.style.opacity = 0;
+            setTimeout(() => {
+                flash.remove();
+                button.style.display = "inline-block";
+            }, 500);
+        }, 3000);
+    }
 }
 
-// Submit button on Add Task page
-const addButton = document.getElementById("add_task_btn");
-if (flash_profile && addButton) {
-    addButton.style.display = "none";
-    setTimeout(() => {
-        flash_profile.style.opacity = 0;
-        setTimeout(() => {
-            flash_profile.remove();
-            addButton.style.display = "inline-block";
-        }, 500);
-    }, 3000);
-}
+// Adding Buttons for Fading 
+[
+    "edit_profile_btn",
+    "change_profile_btn",
+    "add_task_btn",
+    "login_btn",
+    "signup_btn",
+    "create_pass_btn",
+    "change_pass_btn",
+    "send_message_mobile"
+].forEach(id => handleFlashAndButton(id));
 
-// Submit button on Login page
-const loginButton = document.getElementById("login_btn");
-if (flash_profile && loginButton) {
-    loginButton.style.display = "none";
-    setTimeout(() => {
-        flash_profile.style.opacity = 0;
-        setTimeout(() => {
-            flash_profile.remove();
-            loginButton.style.display = "inline-block";
-        }, 500);
-    }, 3000);
-}
 
-// Back and Exit Functionality on Signup Page
-document.querySelectorAll(".return_button").forEach(button => {
-    button.addEventListener("click", function() {
-        const action = this.textContent.trim().toLowerCase();
-        if(action === "back") {
-            document.getElementById("stage_action").value = "back";
-        } else if(action === "exit") {
-            document.getElementById("stage_action").value = "exit";
-        }
-        this.form.submit();
-    });
-});
+// Back & Exit Navigation
+function setStage(stage, formId) {
+    document.getElementById("stage_action").value = stage;
+    document.querySelector(`#${formId} form`).submit();
+}
