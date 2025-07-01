@@ -15,17 +15,15 @@
     <h1>Update Task</h1>
     <hr>
     <div id="taskdata">
-        <form action="" method="POST">
+        <form method="POST">
 
         <!-- User Task -->
         <label for="name">Task</label>
-        <input type="text" name="task" id="task" placeholder="Enter the task" value="{{task.task}}" required >
+        <input type="text" name="task" id="task" placeholder="Enter the task" value="{{task.task}}" minlength="3" maxlength="50" required >
         
         <!-- User Task Description -->
         <label for="name">Description</label>
-        <textarea name="desc" id="desc" placeholder="Enter the task description" required >{{task.description}}</textarea>
-
-            <p></p>
+        <textarea name="desc" id="desc" placeholder="Enter the task description" minlength="10" maxlength="250" required >{{task.description}}</textarea>
 
         <!-- Submit Button -->
         <button type="submit" id="add_task_btn">Add</button>

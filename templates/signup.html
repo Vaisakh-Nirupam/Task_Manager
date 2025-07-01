@@ -11,92 +11,95 @@
 
 <!-- Signup Page Content -->
 {% block body %}
-<div id="signup_form">
+<!-- Signup -->
+<div id="signup">
     <!-- Signup Heading -->
     <h1>Signup</h1>
     <hr />
-
-    <!-- Signup -->
-    <div id="signup">
+    <div id="signup_form">
         <!-- Signup Form -->
-        <form action="" method="POST">
+        <form method="POST">
         
-        <!-- User Full Name -->
+        <!-- OTP Send -->
         {% if signup_stage == 1 %}
+            <!-- User Full Name -->
             <label for="fullname">Full Name</label>
-            <input type="text" name="fullname" id="fullname" placeholder="Enter your Full Name" required />
+            <input type="text" name="fullname" id="fullname" placeholder="Enter your Full Name" minlength="3" maxlength="50" required >
             
             <!-- User Email -->
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email address" required />
+            <input type="email" name="email" id="email" placeholder="Enter your email address" maxlength="50" required >
 
             <!-- Login Redirect -->
             <p>Already a User? <a href="/login">Login</a></p>
             
             <!-- OTP Send Button -->
-            <button type="submit">Send</button>
+            <button type="submit" id="signup_btn">Send</button>
 
             <!-- Alert Message -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                    <div id="flash-message" class="flash flash_{{category}}">
-                        {{ message }}
-                    </div>
+                        <div id="flash-message-disappear" class="flash flash_{{category}}">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-                
+               
+            
         <!-- OTP Submission -->
         {% elif signup_stage == 2 %}
         
             <!-- Enter OTP Received -->
             <label for="pass">Enter the OTP Number</label>
-            <input type="password" name="pass" id="pass" placeholder="Enter the otp sent" required />
+            <input type="password" name="pass" id="pass" placeholder="Enter the otp sent" minlength="6" maxlength="6" required />
             
             <!-- OTP Validate Button -->
             <button type="submit">Submit</button>
 
             <!-- Back Button -->
             <input type="hidden" name="stage_action" id="stage_action" value="">
-            <button type="button" class="return_button">Back</button>
+            <button type="button" class="return_button" onclick="setStage('back', 'signup_form')">Back</button>
 
             <!-- Alert Message -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                    <div id="flash-message" class="flash flash_{{category}}">
-                        {{ message }}
-                    </div>
+                        <div id="flash-message" class="flash flash_{{category}}">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
              
+
         <!-- User Password -->
         {% else %}
 
             <!-- Create User Password -->
             <label for="pass">Create Password</label>
-            <input type="password" name="create_pass" id="create_pass" placeholder="Enter your password" required/>
+            <input type="password" name="create_pass" id="create_pass" placeholder="Enter your password" minlength="6" maxlength="16" required/>
             
             <!-- Confirm User Password -->
             <label for="pass">Confirm Password</label>
-            <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your password" required/>
+            <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your password" minlength="6" maxlength="16" required/>
             
             <!-- Account Create Button -->
-            <button type="submit">Submit</button>
+            <button type="submit" id="create_pass_btn">Submit</button>
 
             <!-- Exit Button -->
             <input type="hidden" name="stage_action" id="stage_action" value="">
-            <button type="button" class="return_button">Exit</button>
+            <button type="button" class="return_button" onclick="setStage('exit', 'signup_form')">Exit</button>
+
 
             <!-- Alert Message -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                    <div id="flash-message" class="flash flash_{{category}}">
-                        {{ message }}
-                    </div>
+                        <div id="flash-message-disappear" class="flash flash_{{category}}">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}

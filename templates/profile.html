@@ -15,7 +15,7 @@
     <h1>Profile</h1>
     <hr />
     <div id="profile_form">
-        <form action="" method="POST">
+        <form method="POST">
 
         <!-- View Profile Page -->
         {% if page == "view_profile" %}
@@ -44,10 +44,10 @@
         <!-- Edit Profile Page -->
         {% elif page == "edit_profile" %}
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}" required >
+        <input type="text" name="name" id="name" placeholder="Enter your name" value="{{ profile.fullname }}" minlength="3" maxlength="50" required >
     
         <label for="phone">Phone</label>
-        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}" required >
+        <input type="text" name="phone" id="phone" placeholder="Enter your phone number" value="{{ profile.phone }}" inputmode="numeric" pattern="[0-9]{10}" minlength="10" maxlength="10" >
 
         <button type="submit" name="action" value="save_profile" id="edit_profile">Submit</button>
         <button type="submit" name="action" value="change_password" id="change_password">Change Password</button>
@@ -66,15 +66,15 @@
         <!-- Change Password Page -->
         {% else %}
         <label for="old_pass">Old Password</label>
-        <input type="password" name="old_pass" id="old_pass" placeholder="Enter your old password" required>
+        <input type="password" name="old_pass" id="old_pass" placeholder="Enter your old password" minlength="6" maxlength="16" required>
 
         <label for="new_pass">New Password</label>
-        <input type="password" name="new_pass" id="new_pass" placeholder="Enter your new password" required>
+        <input type="password" name="new_pass" id="new_pass" placeholder="Enter your new password" minlength="6" maxlength="16" required>
 
         <label for="confirm_pass">Confirm Password</label>
-        <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your new password" required>
+        <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm your new password" minlength="6" maxlength="16" required>
 
-        <button type="submit" name="action" value="save_password" id="edit_profile">Submit</button>
+        <button type="submit" name="action" value="save_password" id="change_profile_btn">Submit</button>
 
         <!-- Alert Message -->
         {% with messages = get_flashed_messages(with_categories=true) %}

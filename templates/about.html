@@ -40,24 +40,24 @@
           <h2>Send a Message</h2>
 
           <!-- User Name -->
-          <input type="text" name="name" id="name" placeholder="Enter your Name" required/>
+          <input type="text" name="name" id="name" placeholder="Enter your name" minlength="3" maxlength="50" required/>
 
           <!-- User Email -->
-          <input type="email" name="email" id="email" placeholder="Enter your email address" required/>
+          <input type="email" name="email" id="email" placeholder="Enter your email address" maxlength="50" required/>
 
           <!-- User Message -->
-          <input type="text" name="message" id="message" placeholder="Enter your message" required/>
+          <input type="text" name="message" id="message" placeholder="Enter your message" minlength="15" maxlength="250" required/>
 
           <!-- Send button on Phone -->
           <button type="submit" id="send_message_mobile" class="button_a_tag">Send</button>
 
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-              {% for category, message in messages %}
-                <div id="flash-message" class="flash flash_{{category}}">
-                  {{ message }}
-                </div>
-              {% endfor %}
+                {% for category, message in messages %}
+                    <div id="flash-message-disappear" class="flash flash_{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
           {% endwith %}
 
