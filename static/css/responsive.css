@@ -13,10 +13,8 @@
     }
   
     #pages ul {
-        flex-direction: row; /* stay horizontal */
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
+      flex-direction: row;
+      gap: 5px;
     }
 
     #pages ul li a {
