@@ -60,6 +60,15 @@ button {
     padding: 5px 25px;
 }
 
+#home_desc {
+  display: flex;
+  flex-direction: column;
+}
+
+#home_desc a {
+  width: 92%;
+}
+
 #about_col {
     display: flex;
     justify-content: center;
@@ -100,6 +109,10 @@ p{
   margin-bottom: 10px;
 }
 
+a{
+  text-decoration: none;
+}
+
 #send_message_mobile {
   display: none;
 }
@@ -116,3 +129,4 @@ p{
     display: none;
   }
 }
+
