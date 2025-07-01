@@ -33,7 +33,7 @@ function handleFlashAndButton(buttonId) {
     "signup_btn",
     "create_pass_btn",
     "change_pass_btn",
-    "send_message_mobile"
+    // "send_message_mobile"
 ].forEach(id => handleFlashAndButton(id));
 
 

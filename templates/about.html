@@ -50,19 +50,17 @@
 
           <!-- Send button on Phone -->
           <button type="submit" id="send_message_mobile" class="button_a_tag">Send</button>
-
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div id="flash-message-disappear" class="flash flash_{{category}}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-          {% endwith %}
-
         </div>
-        </form>
-  </div>
+      </form>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div id="flash-message" class="flash flash_{{category}}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
 </div>
 {% endblock body %}

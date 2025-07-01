@@ -73,6 +73,7 @@ button {
     display: flex;
     justify-content: center;
     gap: 30px;
+    height: auto;
 }
 
 #about_col hr{

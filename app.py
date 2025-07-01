@@ -291,12 +291,12 @@ def about():
             subject="My Task Manager Contact Message",
             sender=app.config['MAIL_USERNAME'],
             recipients=[app.config['MAIL_RECEIVER']],
-            body=f"Name:{name}\n\nEmail:{email}\n\nMessage:{message}"
+            body=f"Name: {name}\n\nEmail: {email}\n\nMessage: {message}"
         )
 
         mail.send(msg)
 
-        flash("Your Message has been Sent Successfully!", "success")
+        flash("Your Message Sent Successfully!", "success")
 
     return render_template("about.html", logged=False, active="about")
 
