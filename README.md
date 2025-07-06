@@ -46,8 +46,8 @@ A secure, responsive **Flask** web application built to help users manage their 
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/yourusername/my-task-manager.git
-cd my-task-manager
+git clone https://github.com/Vaisakh-Nirupam/Task_Manager.git
+cd Task_Manager
 ```
 
 2. **Create a virtual environment**:
