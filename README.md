@@ -31,13 +31,12 @@ A secure, responsive **Flask** web application built to help users manage their 
 
 ## 🛠️ Tech Stack
 
-| Tool      | Description                             |
-| --------- | --------------------------------------- |
-| Flask     | Python web framework for routes & logic |
-| MySQL     | Backend database                        |
-| HTML/CSS  | Frontend structure & styling            |
-| Bootstrap | Responsive, mobile-first UI framework   |
-| SMTP      | For sending OTP verification emails     |
+| Tool     | Description                             |
+| -------- | --------------------------------------- |
+| Flask    | Python web framework for routes & logic |
+| MySQL    | Backend database                        |
+| HTML/CSS | Frontend structure & styling            |
+| SMTP     | For sending OTP verification emails     |
 
 ---
 
@@ -85,11 +84,9 @@ Visit [http://localhost:5000](http://localhost:5000) in your browser.
 
 ## 🖼️ Screenshots
 
-```markdown
 ![Signup Page](static/images/MyTaskManager_Signup.png)  
 ![Home](static/images/MyTaskManager_Home.png)
 ![View Task Page](static/images/MyTaskManager_ViewTask.png)
-```
 
 ---
 
