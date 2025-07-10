@@ -142,8 +142,12 @@ My Task Manager Team
             )
 
             # Email Sent
-            mail.send(msg)
-            flash("An OTP has been sent to your email address!", "success")
+            try:
+                mail.send(msg)
+                flash("An OTP has been sent to your email address!", "success")
+            except Exception as e:
+                flash("Email sending failed. Please try again later.", "error")
+                print(f"Email error: {e}")
             
             # Session Storing Values
             session['forgot_otp'] = otp
@@ -231,8 +235,12 @@ My Task Manager Team
             )
 
             # Email Sent
-            mail.send(msg)
-            flash("An OTP has been sent to your email address!", "success")
+            try:
+                mail.send(msg)
+                flash("An OTP has been sent to your email address!", "success")
+            except Exception as e:
+                flash("Email sending failed. Please try again later.", "error")
+                print(f"Email error: {e}")
             
             # Session Storing Values
             session['signup_name'] = name
@@ -447,5 +455,5 @@ def logout():
 
 # Main guard
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-    # app.run(debug=True)
+    # app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True)
